@@ -1,5 +1,6 @@
 ---
-name: Other things
+name: Other Things
+about: Other Things
 labels: other
 assignees: ''
 ---

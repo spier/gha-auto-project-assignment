@@ -1,5 +1,6 @@
 ---
 name: Website
+about: Website
 labels: website
 assignees: ''
 ---
