@@ -3,7 +3,9 @@ name: IssueOps - Auto Assign to Project(s)
 on:
   issues:
     types: [opened, labeled]
-
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
 jobs:
   assign_one_project:
     runs-on: ubuntu-latest
