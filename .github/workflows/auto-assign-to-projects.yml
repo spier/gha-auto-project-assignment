@@ -1,0 +1,17 @@
+name: IssueOps - Auto Assign to Project(s)
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  assign_one_project:
+    runs-on: ubuntu-latest
+    name: Assign to One Project
+    steps:
+    - name: Assign NEW issues and NEW pull requests to project 1 ("Website Building")
+      uses: srggrs/assign-one-project-github-action@1.2.1
+      if: github.event.action == 'opened' && (contains(github.event.issue.labels.*.name, 'website') ||
+      contains(github.event.pull_request.labels.*.name, 'website'))
+      with:
+        project: 'https://github.com/spier/gha-auto-project-assignment/projects/1'
