@@ -18,7 +18,7 @@ jobs:
         contains(github.event.pull_request.labels.*.name, 'website'))
       with:
         project: 'https://github.com/spier/gha-auto-project-assignment/projects/1'
-    - name: Assign issues and pull requests to project 1 ("Other Things")
+    - name: Assign issues and pull requests to project 2 ("Other Things")
       uses: srggrs/assign-one-project-github-action@1.2.1
       if: |
         (contains(github.event.issue.labels.*.name, 'other') ||
