@@ -22,6 +22,9 @@ jobs:
           script: |
             //const { local_labels } = process.env.labels;
 
+            console.log(context)
+            console.log(context.issue)
+
             console.log(context.issue.labels)
 
             //const { data: local_labels } = await github.issues.listLabelsOnIssue({
