@@ -13,11 +13,11 @@ jobs:
     steps:
     - name: Extract project labels
       id: extract
-      uses: actions/github-script@v3
+      uses: actions/github-script@v4
       # env:
       #     labels: ${{ github.event.issue.labels }}
       with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          # github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             # const { labels } = process.env;
             for (const label of github.event.issue.labels) {
