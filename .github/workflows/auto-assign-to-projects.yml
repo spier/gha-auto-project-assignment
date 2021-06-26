@@ -14,13 +14,13 @@ jobs:
     - name: Extract project labels
       id: extract
       uses: actions/github-script@v3
-      env:
-          labels: ${{ github.event.issue.labels }}
+      # env:
+      #     labels: ${{ github.event.issue.labels }}
       with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const { labels } = process.env;
-            for (const label of labels) {
+            # const { labels } = process.env;
+            for (const label of github.event.issue.labels) {
               if (label.name.match(/^project_(.*)/) {
                 echo "${label.name}"
               }
@@ -28,7 +28,7 @@ jobs:
 
     #         let project_number = title.match(/^project_(.*)/)[1]
 
-    
+
     # - name: Assign issues and pull requests to project 1 ("Website Building")
     #   uses: srggrs/assign-one-project-github-action@1.2.1
     #   if: |
