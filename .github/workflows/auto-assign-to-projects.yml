@@ -20,9 +20,9 @@ jobs:
       with:
           # github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const { local_labels } = process.env.labels;
+            //const { local_labels } = process.env.labels;
 
-            console.log(context.event.issue.labels)
+            console.log(context.issue.labels)
 
             //const { data: local_labels } = await github.issues.listLabelsOnIssue({
             //  owner: context.repo.owner,
@@ -31,7 +31,7 @@ jobs:
             //});
             //console.log(local_labels)
 
-            for (const label of local_labels) {
+            for (const label of context.issue.labels) {
               if (label.name.match(/^project_(.*)/)) {
                 let project_number = label.name.match(/^project_(.*)/)[1]
                 console.log(project_number)
