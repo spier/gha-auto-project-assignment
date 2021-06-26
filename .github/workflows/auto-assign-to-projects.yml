@@ -20,7 +20,9 @@ jobs:
       with:
           # github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const { local_labels } = fromJSON(process.env.labels);
+            const { local_labels } = process.env.labels;
+
+            console.log(context.event.issue.labels)
 
             //const { data: local_labels } = await github.issues.listLabelsOnIssue({
             //  owner: context.repo.owner,
