@@ -11,17 +11,35 @@ jobs:
     runs-on: ubuntu-latest
     name: Assign to One Project
     steps:
-    - name: Assign issues and pull requests to project 1 ("Website Building")
-      uses: srggrs/assign-one-project-github-action@1.2.1
-      if: |
-        (contains(github.event.issue.labels.*.name, 'website') ||
-        contains(github.event.pull_request.labels.*.name, 'website'))
+    - name: Extract project labels
+      id: extract
+      uses: actions/github-script@v3
+      env:
+          labels: ${{ github.event.issue.labels }}
       with:
-        project: 'https://github.com/spier/gha-auto-project-assignment/projects/1'
-    - name: Assign issues and pull requests to project 2 ("Other Things")
-      uses: srggrs/assign-one-project-github-action@1.2.1
-      if: |
-        (contains(github.event.issue.labels.*.name, 'other') ||
-        contains(github.event.pull_request.labels.*.name, 'other'))
-      with:
-        project: 'https://github.com/spier/gha-auto-project-assignment/projects/2'
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const { labels } = process.env;
+            for (const label of labels) {
+              if (label.name.match(/^project_(.*)/) {
+                echo "${label.name}"
+              }
+            }
+
+    #         let project_number = title.match(/^project_(.*)/)[1]
+
+    
+    # - name: Assign issues and pull requests to project 1 ("Website Building")
+    #   uses: srggrs/assign-one-project-github-action@1.2.1
+    #   if: |
+    #     (contains(github.event.issue.labels.*.name, 'website') ||
+    #     contains(github.event.pull_request.labels.*.name, 'website'))
+    #   with:
+    #     project: 'https://github.com/spier/gha-auto-project-assignment/projects/1'
+    # - name: Assign issues and pull requests to project 2 ("Other Things")
+    #   uses: srggrs/assign-one-project-github-action@1.2.1
+    #   if: |
+    #     (contains(github.event.issue.labels.*.name, 'other') ||
+    #     contains(github.event.pull_request.labels.*.name, 'other'))
+    #   with:
+    #     project: 'https://github.com/spier/gha-auto-project-assignment/projects/2'
