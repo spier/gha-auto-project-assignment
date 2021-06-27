@@ -20,9 +20,6 @@ jobs:
       with:
           # github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const bla = process.github.event.issue.labels
-            console.log(bla)
-            
             //const { local_labels } = process.env.labels;
             // Are we really supposed to access the payload? context.issue does
             // not contain the labels for some reason.
