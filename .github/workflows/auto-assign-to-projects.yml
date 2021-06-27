@@ -15,8 +15,8 @@ jobs:
     - name: Extract project labels
       id: extract
       uses: actions/github-script@v4
-      env:
-          labels: ${{ toJSON(github.event.issue.labels) }}
+      # env:
+      #     labels: ${{ toJSON(github.event.issue.labels) }}
       with:
           # github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -24,6 +24,7 @@ jobs:
             // Are we really supposed to access the payload? context.issue does
             // not contain the labels for some reason.
             const local_labels = context.payload.issue.labels;
+            let project_number = -1
 
             //const { data: local_labels } = await github.issues.listLabelsOnIssue({
             //  owner: context.repo.owner,
@@ -38,6 +39,13 @@ jobs:
                 console.log(project_number)
               }
             }
+
+            const project = await github.pojects.get({
+              project_id,
+            });
+            console.log(project)
+
+
 
 
     # - name: Assign issues and pull requests to project 1 ("Website Building")

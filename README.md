@@ -4,8 +4,8 @@ Test to automatically move a newly created issue to a given project board, using
 
 ## Possible Improvements
 
-- remove the label after the issue has been assigned
-- extra project from label automatically, to make it easier to use the auto-assignment for new repos [auto-assign-to-projects.yml](.github/workflows/auto-assign-to-projects.yml)
+- remove the label after the issue has been assigned (or rather not?)
+- write a catch-all GHA express, so that the target project can be determined from a given label automatically. Would make it easier for people that don't know how to write GHA expressions. See [auto-assign-to-projects.yml](.github/workflows/auto-assign-to-projects.yml)
 
 ## Gotchas
 
