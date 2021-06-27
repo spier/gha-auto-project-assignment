@@ -18,7 +18,6 @@ jobs:
       # env:
       #     labels: ${{ toJSON(github.event.issue.labels) }}
       with:
-          # github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             //const { local_labels } = process.env.labels;
             // Are we really supposed to access the payload? context.issue does
@@ -36,12 +35,13 @@ jobs:
             for (const label of local_labels) {
               if (label.name.match(/^project_(.*)/)) {
                 project_number = label.name.match(/^project_(\d+)/)[1]
-                //project_number = project_number.valueOf()
 
                 console.log("Project Number extracted from label: " + project_number)
               }
             }
 
+            // retrieve all projects for the repo.
+            // then look for the one with the given 'project_number'
             const { data: projects } = await github.projects.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -49,14 +49,13 @@ jobs:
 
             let local_project
             for (const project of projects) {
-              console.log(project.number + "||" + project_number)
-
+              //console.log(project.number + "||" + project_number)
               if (project.number == project_number) {
                 local_project = project
                 break
               }
             }
-            console.log(local_project.html_url)
+            console.log("Found project with URL: " + local_project.html_url)
             core.setOutput('project_url', local_project.html_url)
 
             // this didn't work. project number and project ID are not the same thing!
@@ -65,25 +64,8 @@ jobs:
             //});
             //console.log(project)
 
-    - name: test
-      uses: actions/github-script@v4
+    - name: Assign issues to project
+      uses: srggrs/assign-one-project-github-action@1.2.1
+      if: ${{ success() }}
       with:
-        script: |
-          echo 'Sebastian-'
-          echo '${{steps.extract.outputs.project_url}}'
-
-
-    # - name: Assign issues and pull requests to project 1 ("Website Building")
-    #   uses: srggrs/assign-one-project-github-action@1.2.1
-    #   if: |
-    #     (contains(github.event.issue.labels.*.name, 'website') ||
-    #     contains(github.event.pull_request.labels.*.name, 'website'))
-    #   with:
-    #     project: 'https://github.com/spier/gha-auto-project-assignment/projects/1'
-    # - name: Assign issues and pull requests to project 2 ("Other Things")
-    #   uses: srggrs/assign-one-project-github-action@1.2.1
-    #   if: |
-    #     (contains(github.event.issue.labels.*.name, 'other') ||
-    #     contains(github.event.pull_request.labels.*.name, 'other'))
-    #   with:
-    #     project: 'https://github.com/spier/gha-auto-project-assignment/projects/2'
+        project: '${{ steps.extract.outputs.project_url }}'
