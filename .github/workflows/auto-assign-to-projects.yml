@@ -40,10 +40,23 @@ jobs:
               }
             }
 
-            const project = await github.projects.get({
-              project_number,
+            const projects = await github.projects.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
             });
-            console.log(project)
+
+            let local_project
+            for (const project of projects) {
+              if (project.number == project_number) {
+                local_project = project
+              }
+            }
+            console.log(local_project)
+
+            //const project = await github.projects.get({
+            //  project_number,
+            //});
+            //console.log(project)
 
 
 
