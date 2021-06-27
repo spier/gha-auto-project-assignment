@@ -35,7 +35,7 @@ jobs:
 
             for (const label of local_labels) {
               if (label.name.match(/^project_(.*)/)) {
-                project_number = label.name.match(/^project_(.*)/)[1]
+                project_number = label.name.match(/^project_(\d+)/)[1]
                 //project_number = project_number.valueOf()
 
                 console.log("Project Number extracted from label: " + project_number)
@@ -53,16 +53,24 @@ jobs:
 
               if (project.number == project_number) {
                 local_project = project
+                break
               }
             }
-            console.log(local_project)
+            console.log(local_project.html_url)
+            core.setOutput('project_url', local_project.html_url)
 
+            // this didn't work. project number and project ID are not the same thing!
             //const project = await github.projects.get({
             //  project_number,
             //});
             //console.log(project)
 
-
+    - name: test
+      uses: actions/github-script@v4
+      with:
+        script: |
+          echo 'Sebastian-'
+          echo '${{steps.extract.outputs.project_url}}'
 
 
     # - name: Assign issues and pull requests to project 1 ("Website Building")
