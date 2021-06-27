@@ -36,7 +36,7 @@ jobs:
             for (const label of local_labels) {
               if (label.name.match(/^project_(.*)/)) {
                 let project_number = label.name.match(/^project_(.*)/)[1]
-                console.log(project_number)
+                console.log("Project Number extracted from label: " + project_number)
               }
             }
 
@@ -47,6 +47,7 @@ jobs:
 
             let local_project
             for (const project of projects) {
+              console.log(project)
               if (project.number == project_number) {
                 local_project = project
               }
